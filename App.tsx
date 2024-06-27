@@ -4,6 +4,7 @@ import { useFonts, NunitoSans_400Regular, NunitoSans_700Bold } from '@expo-googl
 import { Loading } from '@Components/Loading';
 
 import { Home } from '@screens/Home';
+import { Stats } from '@screens/Stats';
 
 import theme from './src/theme';
 
@@ -12,7 +13,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fontsLoaded ? <Home /> : <Loading />}
+      {fontsLoaded ? <Stats /> : <Loading />}
     </ThemeProvider>
   );
 }

@@ -16,7 +16,7 @@ export function Home() {
                 <ForkKnife size={36} weight="bold" style={{ marginRight: 5 }}/>
                 <Image source={require('@assets/images/Vector.png')}/>
             </LogoContainer>
-            <Percent/>
+            <Percent percentNumber={50}/>
             <Meals>
                 <New>
                     <Text>Refeições</Text>

@@ -1,16 +1,23 @@
-import { Container, PercentNumber, PercentDescription, ArrowUpIcon } from './styles';
+import { Container, PercentNumber, PercentDescription, ArrowUpIcon, ArrowLeftIcon } from './styles';
 
+type Props = {
+    percentNumber: number;
+    iconPosition?: 'left' | 'right';
+    height?: number;
+};
 
-export default function Percent() {
+export default function Percent({ percentNumber, iconPosition, height  }: Props) {
+    const ArrowIcon = iconPosition === 'left' ?  ArrowLeftIcon : ArrowUpIcon;
+    
     return(
-        <Container>
+        <Container height={height}>
             <PercentNumber>
-                50,86%
+                {percentNumber}%
             </PercentNumber>     
             <PercentDescription>
                 das refeições dentro da dieta.
             </PercentDescription>
-            <ArrowUpIcon />       
+            <ArrowIcon />       
         </Container>
     )
 }

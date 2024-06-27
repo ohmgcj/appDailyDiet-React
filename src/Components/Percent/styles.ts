@@ -1,7 +1,12 @@
 import styled from 'styled-components/native';
-import { ArrowUpRight } from 'phosphor-react-native'
+import { ArrowUpRight, ArrowLeft } from 'phosphor-react-native'
 
-export const Container = styled.View`
+type BoxProps = {
+    width?: number;
+    height?: number;
+}
+
+export const Container = styled.View<BoxProps>`
     background-color: ${({ theme }) => theme.COLORS.GREEN_LIGHT};
     border-radius: 8px;
 
@@ -9,6 +14,7 @@ export const Container = styled.View`
     align-items: center;
 
     padding: 20px;
+    ${props => props.height && `height: ${props.height}px;`}
 `;
 
 export const PercentNumber = styled.Text`
@@ -29,4 +35,13 @@ export const ArrowUpIcon = styled(ArrowUpRight).attrs(({ theme }) => ({
     position: absolute;
     top: 10px;
     right: 10px;
+`;
+
+export const ArrowLeftIcon = styled(ArrowLeft).attrs(({ theme }) => ({
+    size: 24,
+    color: theme.COLORS.GREEN_DARK
+}))`
+    position: absolute;
+    left: 26px;
+    top: 50px;
 `;
