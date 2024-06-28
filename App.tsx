@@ -5,6 +5,7 @@ import { Loading } from '@Components/Loading';
 
 import { Home } from '@screens/Home';
 import { Stats } from '@screens/Stats';
+import { RegisterMeal } from '@screens/RegisterMeal';
 
 import theme from './src/theme';
 
@@ -13,7 +14,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fontsLoaded ? <Stats /> : <Loading />}
+      {fontsLoaded ? <RegisterMeal /> : <Loading />}
     </ThemeProvider>
   );
 }
