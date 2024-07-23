@@ -1,23 +1,39 @@
-import { Container, Content, Form, Label, Name, DateAndTime } from './styles';
+import { Container, Content, Form, Label, NameInput, DescInput, DateAndTime, LeftWrapper, RightWrapper, DietButtons, DietButtonsOptions } from './styles';
 
+import ButtonDietStatus from '@Components/ButtonDietStatus';
 import { Header } from '@Components/Header';
 
 export function RegisterMeal(){
     return(
         <Container>
-            <Header title='Teste' type='GREEN'/>
+            <Header title='Registro de prato'/>
             <Content>
                 <Form>
                     <Label>Nome</Label>
-                    <Name/>
+                    <NameInput/>
                     <Label>Descrição</Label>
-                    <Name/>
+                    <DescInput/>
                     <DateAndTime>
-                    <Label>Descrição</Label>
-                    <Name/>
-                    <Label>Descrição</Label>
-                    <Name/>
+                        <LeftWrapper>
+                        <Label>Data</Label>
+                        <NameInput/>
+                        </LeftWrapper>
+                        <RightWrapper>
+                        <Label>Hora</Label>
+                        <NameInput/>
+                        </RightWrapper>
                     </DateAndTime>
+                    <DietButtons>
+                        <Label>Está dentro da dieta?</Label>
+                        <DietButtonsOptions>
+                        <LeftWrapper>
+                            <ButtonDietStatus status='GREEN' type='DEFAULT' title='Sim'/>
+                        </LeftWrapper>
+                        <RightWrapper>
+                        <ButtonDietStatus status='RED' type='DEFAULT' title='Não'/>
+                        </RightWrapper>
+                        </DietButtonsOptions>
+                    </DietButtons>
                 </Form>
             </Content>
         </Container>

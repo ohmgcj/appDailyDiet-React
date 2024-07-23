@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/nunito-sans": "^0.2.3",
-    "expo": "^50.0.17",
+    "expo": "^51.0.20",
     "expo-font": "~11.10.3",
     "expo-image": "~1.10.6",
     "expo-status-bar": "~1.11.1",
