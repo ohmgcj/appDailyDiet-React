@@ -1,17 +1,14 @@
 import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export type ButtonTypeStyleProps = 'DEFAULT' | 'GREEN' | 'RED';
 export type ButtonStatus = 'GREEN' | 'RED';
 
 type ContainerProps = {
-    type?: ButtonTypeStyleProps;
+    type: ButtonTypeStyleProps;
+    isActive?: boolean;
   }
   
-  type StatusProps = {
-    status: ButtonStatus;
-  }
-
 export const Container = styled(TouchableOpacity)<ContainerProps>`
     flex: 1;
     flex-direction: row;
@@ -19,12 +16,18 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
     min-height: 56px;
     max-height: 56px;
 
-    background-color: ${({ theme, type }) => type === 'GREEN' ? theme.COLORS.GREEN_DARK : type === 'RED' ? theme.COLORS.RED_DARK : theme.COLORS.GRAY_6};
+    width: 100%;
+
+    background-color: ${({ theme }) => theme.COLORS.GRAY_6};
 
     border-radius: 6px;
 
     justify-content: center;
     align-items: center;
+    ${({ theme, isActive, type }) => isActive && css`
+      border: 1px solid ${type === 'GREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+      background-color: ${type === 'GREEN' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
+    `};
 `;
 
 export const Title = styled.Text`
@@ -34,10 +37,10 @@ export const Title = styled.Text`
     font-size: ${({ theme }) => theme.FONT_SIZE.MD}px;
 `;
 
-export const Status = styled.View<StatusProps>`
+export const Status = styled.View<ContainerProps>`
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background-color: ${({ theme, status }) => status === 'GREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK };
+    background-color: ${({ theme, type }) => type === 'GREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK };
     margin-right: 8px;
 `;

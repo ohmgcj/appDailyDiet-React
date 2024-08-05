@@ -1,41 +1,149 @@
-import { Container, Content, Form, Label, NameInput, DescInput, DateAndTime, LeftWrapper, RightWrapper, DietButtons, DietButtonsOptions } from './styles';
+import React, { useState } from 'react';
+import { Container, Content, Form, Label, NameInput, DescInput, DateAndTime, LeftWrapper, RightWrapper, DietButtons } from './styles';
 
 import ButtonDietStatus from '@Components/ButtonDietStatus';
+import Button from '@Components/Button';
 import { Header } from '@Components/Header';
+import { Alert, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 export function RegisterMeal(){
+    const [name, setName] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
+    const [date, setDate] = useState<string>('')
+    const [time, setTime] = useState<string>('')
+
+    const [isDateValid, setIsDateValid] = useState<boolean>(true);
+    const [isTimeValid, setIsTimeValid] = useState<boolean>(true);
+
+    const [activeButton, setActiveButton] = useState('');
+
+    // Segue a baixo muitas linhas de comentários, é minha primeira vez trabalhando com formatação automática de data e hora
+
+    // Função para manipular mudanças no campo de data
+    const handleDateChange = (text: string) => {
+        const formattedDate = formatDate(text);
+        setIsDateValid(validateDate(formattedDate));
+        setDate(formattedDate);
+    };
+
+    // Função para formatar a data como DD/MM/YYYY
+    const formatDate = (text: string): string => {
+        const cleaned = text.replace(/\D/g, ''); // Remove tudo que não for número
+        
+        let formattedText = '';
+        
+        // Formata a data enquanto digita
+        if (cleaned.length > 0) {
+        formattedText += cleaned.substring(0, 2); // Dia
+        }
+        if (cleaned.length >= 3) {
+        formattedText += '/' + cleaned.substring(2, 4); // Mês
+        }
+        if (cleaned.length >= 5) {
+        formattedText += '/' + cleaned.substring(4, 8); // Ano
+        }
+
+        return formattedText;
+    };
+
+    // Função para validar o formato da data como DD/MM/YYYY
+    const validateDate = (text: string): boolean => {
+        const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+        return datePattern.test(text);
+    };
+
+    // Função para manipular mudanças no campo de hora
+    const handleTimeChange = (text: string) => {
+        const formattedTime = formatTime(text);
+        setIsTimeValid(validateTime(formattedTime));
+        setTime(formattedTime);
+    };
+
+    // Função para formatar a hora como HH:MM
+    const formatTime = (text: string): string => {
+        const cleaned = text.replace(/\D/g, ''); // Remove tudo que não for número
+        
+        let formattedText = '';
+        
+        // Formata a hora enquanto digita
+        if (cleaned.length > 0) {
+        formattedText += cleaned.substring(0, 2); // Hora
+        }
+        if (cleaned.length >= 3) {
+        formattedText += ':' + cleaned.substring(2, 4); // Minutos
+        }
+
+        return formattedText;
+    };
+
+    // Função para validar o formato da hora como HH:MM
+    const validateTime = (text: string): boolean => {
+        const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+        return timePattern.test(text);
+    };
+
+    // Função para manipular o envio do formulário
+    const handleSubmit = () => {
+        if (isDateValid && isTimeValid && name && description && date && time) {
+        Alert.alert('Concluído', 'Sua refeição foi registrada');
+        } else {
+        Alert.alert('Erro', 'Por favor, preencha todos os campos corretamente.');
+        }
+    };
     return(
         <Container>
-            <Header title='Registro de prato'/>
+            <Header title='Nova refeição'/>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <Content>
                 <Form>
                     <Label>Nome</Label>
-                    <NameInput/>
+                    <NameInput
+                        value={name} 
+                        onChangeText={setName}/>
                     <Label>Descrição</Label>
-                    <DescInput/>
+                    <DescInput
+                        value={description}
+                        onChangeText={setDescription}
+                        multiline/>
                     <DateAndTime>
                         <LeftWrapper>
                         <Label>Data</Label>
-                        <NameInput/>
+                        <NameInput 
+                            value={date}
+                            onChangeText={handleDateChange}
+                            placeholder='DD/MM/AAAA' keyboardType='numeric'/>
                         </LeftWrapper>
                         <RightWrapper>
                         <Label>Hora</Label>
-                        <NameInput/>
+                        <NameInput 
+                            value={time}
+                            onChangeText={handleTimeChange}
+                            placeholder='HH:MM' keyboardType='numeric' 
+                            maxLength={5}/>
                         </RightWrapper>
                     </DateAndTime>
                     <DietButtons>
                         <Label>Está dentro da dieta?</Label>
-                        <DietButtonsOptions>
-                        <LeftWrapper>
-                            <ButtonDietStatus status='GREEN' type='DEFAULT' title='Sim'/>
-                        </LeftWrapper>
-                        <RightWrapper>
-                        <ButtonDietStatus status='RED' type='DEFAULT' title='Não'/>
-                        </RightWrapper>
-                        </DietButtonsOptions>
+                        <FlatList 
+                        data={['Sim', 'Não']}
+                        keyExtractor={item => item}
+                        horizontal={false}
+                        numColumns={2}
+                        contentContainerStyle={{ justifyContent: 'center', alignItems: "stretch" }}
+                        columnWrapperStyle={{ gap: 8 }}
+                        renderItem={({item}) => (
+                            <ButtonDietStatus
+                            type={item === 'Sim' ? 'GREEN' : 'RED'} 
+                            title={item} 
+                            onPress={() => setActiveButton(item)}
+                            isActive={activeButton == item}/>                          
+                        )}
+                        />
                     </DietButtons>
                 </Form>
+                <Button title='Nova Refeição' onPress={handleSubmit}/>
             </Content>
+            </TouchableWithoutFeedback>
         </Container>
     )
 }

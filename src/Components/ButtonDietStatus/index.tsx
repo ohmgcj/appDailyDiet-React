@@ -1,18 +1,21 @@
 import { Container, Title, Status} from './styles';
 
-export type ButtonTypeStyleProps = 'DEFAULT' | 'GREEN' | 'RED';
-export type ButtonStatus = 'GREEN' | 'RED';
+export type ButtonTypeStyleProps = 'GREEN' | 'RED';
 
 type Props = {
     type: ButtonTypeStyleProps;
-    status: ButtonStatus;
     title: string;
+    isActive: boolean;
+    onPress: () => void;
 }
 
-export default function ButtonDietStatus({type, status, title}: Props) {
+export default function ButtonDietStatus({type, title, isActive, onPress}: Props) {
     return(
-        <Container type={type}>
-            <Status status={status}/>
+        <Container 
+        type={type} 
+        onPress={onPress}
+        isActive={isActive}>
+            <Status type={type}/>
             <Title>{title}</Title>
         </Container>
     );

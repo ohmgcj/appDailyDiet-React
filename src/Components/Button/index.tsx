@@ -1,9 +1,14 @@
 import { Container, Title } from './styles';
 
-export default function Button() {
+type ButtonProps = {
+    title: string;
+    onPress: () => void;
+}
+
+export default function Button({ title, onPress}:ButtonProps) {
     return(
-        <Container type='DEFAULT'>
-            <Title>Nova Refeição</Title>
+        <Container type='DEFAULT' onPress={onPress}>
+            <Title>{title}</Title>
         </Container>
     );
 }
