@@ -6,6 +6,7 @@ import { Loading } from '@Components/Loading';
 import { Home } from '@screens/Home';
 import { Stats } from '@screens/Stats';
 import { RegisterMeal } from '@screens/RegisterMeal';
+import { ConsultMeal } from '@screens/ConsultMeal';
 import { Feedback } from '@screens/Feedback';
 
 import theme from './src/theme';
@@ -15,7 +16,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fontsLoaded ? <Feedback type={'GREEN'} title={'Continue assim!'} description={'Você continua dentro da dieta. Muito bem!'} /> : <Loading />}
+      {fontsLoaded ? <Home /> : <Loading />}
     </ThemeProvider>
   );
-}
+};

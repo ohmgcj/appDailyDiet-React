@@ -13,7 +13,7 @@ export type Props = {
 };
 
 export function Feedback({ type, title, description }: Props) {
-    const feedbackIcon = type === 'GREEN' ? require('@assets/images/goodFeedback.png') : require('@assets/images/badFeedback.png')
+    const feedbackIcon = type === 'GREEN' ? require('@assets/images/goodFeedback.png') : require('@assets/images/badFeedback.png');
 
     const handleSubmit = () => {
         console.log('testado')

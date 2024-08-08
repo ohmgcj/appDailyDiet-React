@@ -1,8 +1,8 @@
 import { TouchableOpacityProps } from 'react-native'
 import { Container, Icon, Title } from './styles'
-import { Plus, PencilSimpleLine  } from 'phosphor-react-native';
+import { Plus, PencilSimpleLine, Trash  } from 'phosphor-react-native';
 
-export type IconTypeStyle = 'ADD' | 'EDIT';
+export type IconTypeStyle = 'ADD' | 'EDIT' | 'DELETE';
 export type ButtonIconTypeStyleProps = 'DEFAULT' | 'ACTIVE';
 
 type Props = TouchableOpacityProps &{
@@ -11,16 +11,17 @@ type Props = TouchableOpacityProps &{
     title: string;
 }
 
-export function ButtonIcon({ title, icon, onPress, ...rest }: Props){
-    const IconComponent = icon === 'ADD' ? Plus : PencilSimpleLine;
+export function ButtonIcon({ type, title, icon, onPress, ...rest }: Props){
+    const IconComponent = icon === 'ADD' ? Plus : icon === 'EDIT' ? PencilSimpleLine : Trash;
+    const IconColor = type === 'DEFAULT' ? "white" : "black";
     return(
-        <Container type='DEFAULT'>
+        <Container type={type}>
             <Icon  
                 as={IconComponent} 
-                color="white"
+                color={IconColor}
                 size={18}
             />
-            <Title>{title}</Title>
+            <Title type={type}>{title}</Title>
         </Container>
     )
 }

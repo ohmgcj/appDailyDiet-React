@@ -4,7 +4,6 @@ import { Container, LogoContainer, Meals, New, DayList, Date } from './styles';
 import { ForkKnife } from 'phosphor-react-native';
 
 import Percent from '@Components/Percent';
-import Button from '@Components/Button';
 import {ButtonIcon} from '@Components/ButtonIcon';
 import { Meal } from '@Components/Meal';
 

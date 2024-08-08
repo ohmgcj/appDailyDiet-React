@@ -1,5 +1,5 @@
 import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 
 export type ButtonIconTypeStyleProps = 'DEFAULT' | 'ACTIVE';
 
@@ -8,12 +8,16 @@ type Props = {
 }
 
 export const Container = styled(TouchableOpacity)<Props>`
+    ${({ theme, type }) => css`
+        ${type === 'ACTIVE' && `
+        border: 1px solid ${theme.COLORS.GRAY_1};
+        `};
+    `};
     flex-direction: row;
 
-    min-height: 56px;
-    max-height: 56px;
+    padding: 16px 24px;
 
-    background-color: ${({ theme, type }) => type === 'DEFAULT' ? theme.COLORS.GRAY_2 : theme.COLORS.GRAY_1 };
+    background-color: ${({ theme, type }) => type === 'DEFAULT' ? theme.COLORS.GRAY_2 : theme.COLORS.GRAY_6 };
 
     border-radius: 6px;
 
@@ -28,9 +32,12 @@ export const Icon = styled.View`
     margin-right: 12px;
 `;
 
-export const Title = styled.Text`
-    color: ${({ theme }) => theme.COLORS.WHITE};
+export const Title = styled.Text<Props>`
+    ${({ theme, type }) => css`
+    color: ${type === 'DEFAULT' ? theme.COLORS.WHITE : theme.COLORS.GRAY_1};
 
-    font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-    font-size: ${({ theme }) => theme.FONT_SIZE.MD}px;
+    font-family: ${ theme.FONT_FAMILY.BOLD};
+    font-size: ${ theme.FONT_SIZE.MD}px;
+    `};
+
 `;
