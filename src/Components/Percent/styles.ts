@@ -13,7 +13,8 @@ export const Container = styled.View<BoxProps>`
     justify-content: center;
     align-items: center;
 
-    padding: 20px;
+    padding: 20px 16px;
+    gap: 2px;
     ${props => props.height && `height: ${props.height}px;`}
 `;
 
@@ -21,6 +22,7 @@ export const PercentNumber = styled.Text`
     color: ${({ theme }) => theme.COLORS.GRAY_1};
     font-size: ${({ theme }) => theme.FONT_SIZE.XXXL}px;
     font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+    font-weight: bold;
 `;
 
 export const PercentDescription = styled.Text`
@@ -29,7 +31,7 @@ export const PercentDescription = styled.Text`
 `;
 
 export const ArrowUpIcon = styled(ArrowUpRight).attrs(({ theme }) => ({
-    size: 24,
+    size: theme.FONT_SIZE.XXL,
     color: theme.COLORS.GREEN_DARK
 }))`
     position: absolute;

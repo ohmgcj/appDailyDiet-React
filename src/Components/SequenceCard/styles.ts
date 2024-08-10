@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export type CardColorStyle = 'DEFAULT' | 'SUCCESS' | 'FAIL';
 
@@ -8,20 +8,22 @@ type Props = {
 
 
 export const Container = styled.View<Props>`
-   width: 100%;
+  width: 100%;
   padding: 16px;
-  margin-bottom: 16px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background-color: ${({ theme, type }) => type === 'DEFAULT' ? theme.COLORS.GRAY_6 : type === 'SUCCESS' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
   border-radius: 8px;
+
+  gap: 8px;
 `;
 
 export const Total = styled.Text`
-  font-size: 18px;
+  ${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.XXL}px;
+    color: ${theme.COLORS.GRAY_1};
+  `};
   font-weight: bold;
-  color: #000;
-  margin-bottom: 8px;
 `;
 
 export const Info = styled.Text`

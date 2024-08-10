@@ -6,7 +6,7 @@ import { SequenceCard } from '@Components/SequenceCard';
 export function Stats(){
     return(
         <Container>
-            <Percent percentNumber={50} height={200} iconPosition='left'/>
+            <Percent percentNumber={'50,30'} height={200} iconPosition='left'/>
             <Content>
                 <Title>
                     Estatísticas gerais
@@ -34,7 +34,8 @@ export function Stats(){
                         <SequenceCard 
                         type='FAIL'
                         total={12}
-                        info={'refeições fora da dieta'}/>
+                        info={'refeições fora da dieta'}
+                        />
                         </RightWrapper>
                     </Info>
                 </Data>

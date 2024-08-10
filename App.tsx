@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fontsLoaded ? <Home /> : <Loading />}
+      {fontsLoaded ? <ConsultMeal /> : <Loading />}
     </ThemeProvider>
   );
 };

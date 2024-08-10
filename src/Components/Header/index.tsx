@@ -4,7 +4,7 @@ export type HeaderTypeStyleProp = 'GREEN' | 'RED';
 
 type Props = {
     type?: HeaderTypeStyleProp;
-    title: string;    
+    title: number;    
 }
 
 export function Header({type, title}: Props) {

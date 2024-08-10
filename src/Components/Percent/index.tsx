@@ -1,7 +1,7 @@
 import { Container, PercentNumber, PercentDescription, ArrowUpIcon, ArrowLeftIcon } from './styles';
 
 type Props = {
-    percentNumber: number;
+    percentNumber: string;
     iconPosition?: 'left' | 'right';
     height?: number;
 };
