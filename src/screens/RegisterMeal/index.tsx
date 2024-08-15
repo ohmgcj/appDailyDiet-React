@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Content, Form, Label, NameInput, DescInput, DateAndTime, LeftWrapper, RightWrapper, DietButtons } from './styles';
 
+import { useNavigation } from '@react-navigation/native';
+
 import ButtonDietStatus from '@Components/ButtonDietStatus';
 import Button from '@Components/Button';
 import { Header } from '@Components/Header';
@@ -16,6 +18,8 @@ export function RegisterMeal(){
     const [isTimeValid, setIsTimeValid] = useState<boolean>(true);
 
     const [activeButton, setActiveButton] = useState('');
+
+    const navigation = useNavigation();
 
     // Segue a baixo muitas linhas de comentários, é minha primeira vez trabalhando com formatação automática de data e hora
 
@@ -46,7 +50,7 @@ export function RegisterMeal(){
         return formattedText;
     };
 
-    // Função para validar o formato da data como DD/MM/YYYY
+    // Função para validar o formato da data como DD/MM/YYYY com limite
     const validateDate = (text: string): boolean => {
         const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
         return datePattern.test(text);
@@ -76,7 +80,7 @@ export function RegisterMeal(){
         return formattedText;
     };
 
-    // Função para validar o formato da hora como HH:MM
+    // Função para validar o formato da hora como HH:MM com limite
     const validateTime = (text: string): boolean => {
         const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
         return timePattern.test(text);
@@ -86,6 +90,7 @@ export function RegisterMeal(){
     const handleSubmit = () => {
         if (isDateValid && isTimeValid && name && description && date && time) {
         Alert.alert('Concluído', 'Sua refeição foi registrada');
+        navigation.navigate('feedback', { type: 'GREEN', title: 'Teste na home', description: 'description'})
         } else {
         Alert.alert('Erro', 'Por favor, preencha todos os campos corretamente.');
         }

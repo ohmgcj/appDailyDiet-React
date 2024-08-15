@@ -9,6 +9,8 @@ import { RegisterMeal } from '@screens/RegisterMeal';
 import { ConsultMeal } from '@screens/ConsultMeal';
 import { Feedback } from '@screens/Feedback';
 
+import { Routes } from './src/routes';
+
 import theme from './src/theme';
 
 export default function App() {
@@ -16,7 +18,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {fontsLoaded ? <ConsultMeal /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 };

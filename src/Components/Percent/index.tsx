@@ -1,4 +1,6 @@
-import { Container, PercentNumber, PercentDescription, ArrowUpIcon, ArrowLeftIcon } from './styles';
+import { Container, PercentNumber, PercentDescription, ArrowIconTouchable, ArrowUpIcon, ArrowLeftIcon } from './styles';
+
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
     percentNumber: string;
@@ -7,17 +9,31 @@ type Props = {
 };
 
 export default function Percent({ percentNumber, iconPosition, height  }: Props) {
-    const ArrowIcon = iconPosition === 'left' ?  ArrowLeftIcon : ArrowUpIcon;
+    const navigation = useNavigation();
+
+    const handleOpenStats = () => {
+        navigation.navigate('stats');
+    }
+
+    const handleGoBack = () => {
+        navigation.goBack();
+    };
     
     return(
-        <Container height={height}>
+        <Container height={height} onTouchStart={handleOpenStats}>
             <PercentNumber>
                 {percentNumber}%
             </PercentNumber>     
             <PercentDescription>
                 das refeições dentro da dieta.
             </PercentDescription>
-            <ArrowIcon />       
+            {iconPosition === 'left' ? (
+                <ArrowIconTouchable onPress={handleGoBack}>
+                    <ArrowLeftIcon />
+                </ArrowIconTouchable>
+            ) : (
+                <ArrowUpIcon />
+            )}  
         </Container>
     )
 }

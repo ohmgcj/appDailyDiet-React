@@ -1,3 +1,4 @@
+import { SafeAreaView } from 'react-native-safe-area-context';
 import styled, { css } from 'styled-components/native';
 
 export type MealStatus = 'GREEN' | 'RED';
@@ -8,18 +9,17 @@ type Tag = {
 
 export const Container = styled.View`
     flex: 1;
+    background-color: ${({ theme }) => theme.COLORS.GRAY_7  };
 `;
 
-export const Content = styled.View`
+export const Content = styled(SafeAreaView)`
     flex: 1;
-
-    justify-content: space-between;
 
     background-color: ${({ theme }) => theme.COLORS.GRAY_7  };
     align-items: center;
     margin-top: -20px;
     border-radius: 20px;
-    padding: 24px;
+    padding: 0px 25px;
 `;
 
 export const Info = styled.View`
@@ -27,9 +27,6 @@ export const Info = styled.View`
 
     width: 100%;
     height: 100%;
-
-    margin-top: 20px;
-    margin-bottom: 20px;
 
     gap: 24px;
 `;

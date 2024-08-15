@@ -33,3 +33,7 @@ export const DescriptionText = styled.Text`
     color: ${({ theme }) => theme.COLORS.GRAY_1};
     font-size: ${({ theme }) => theme.FONT_SIZE.LG}px;  
 `;
+
+export const BoldDescriptionText = styled.Text`
+    font-weight: bold;  
+`;

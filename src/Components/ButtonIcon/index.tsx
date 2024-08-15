@@ -9,13 +9,14 @@ type Props = TouchableOpacityProps &{
     type: ButtonIconTypeStyleProps;
     icon: IconTypeStyle;
     title: string;
+    onPress: () => void;
 }
 
 export function ButtonIcon({ type, title, icon, onPress, ...rest }: Props){
     const IconComponent = icon === 'ADD' ? Plus : icon === 'EDIT' ? PencilSimpleLine : Trash;
     const IconColor = type === 'DEFAULT' ? "white" : "black";
     return(
-        <Container type={type}>
+        <Container type={type} onPress={onPress}>
             <Icon  
                 as={IconComponent} 
                 color={IconColor}

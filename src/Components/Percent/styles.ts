@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { ArrowUpRight, ArrowLeft } from 'phosphor-react-native'
+import { TouchableOpacity } from 'react-native';
 
 type BoxProps = {
     width?: number;
@@ -27,7 +28,12 @@ export const PercentNumber = styled.Text`
 
 export const PercentDescription = styled.Text`
     color: ${({ theme }) => theme.COLORS.GRAY_2};
-    
+`;
+
+export const ArrowIconTouchable = styled(TouchableOpacity)`
+    position: absolute;
+  left: 26px;
+  top: 50px;
 `;
 
 export const ArrowUpIcon = styled(ArrowUpRight).attrs(({ theme }) => ({
@@ -42,8 +48,4 @@ export const ArrowUpIcon = styled(ArrowUpRight).attrs(({ theme }) => ({
 export const ArrowLeftIcon = styled(ArrowLeft).attrs(({ theme }) => ({
     size: 24,
     color: theme.COLORS.GREEN_DARK
-}))`
-    position: absolute;
-    left: 26px;
-    top: 50px;
-`;
+}))``;

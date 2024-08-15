@@ -1,3 +1,4 @@
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
 export type StatusType = 'STATUSRED' | 'STATUSGREEN';
@@ -6,7 +7,7 @@ type Props = {
     type: StatusType;
 };
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
     flex: 1;
     flex-direction: row;
 
