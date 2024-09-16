@@ -7,7 +7,7 @@ type ButtonProps = {
 
 export default function Button({ title, onPress}:ButtonProps) {
     return(
-        <Container type='DEFAULT' onPress={onPress}>
+        <Container onPress={onPress}>
             <Title>{title}</Title>
         </Container>
     );

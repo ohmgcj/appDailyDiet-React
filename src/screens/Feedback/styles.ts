@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-export type FeedbackType = 'GREEN' | 'RED';
+export type FeedbackType = 'STATUSGREEN' | 'STATUSRED';
 
 export type Props = {
     type: FeedbackType
@@ -23,7 +23,7 @@ export const FeedbackText = styled.View`
 
 export const Title = styled.Text<Props>`
     ${({ theme, type }) => css`
-    color: ${type === 'GREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+    color: ${type === 'STATUSGREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
     font-size: ${theme.FONT_SIZE.XXL}px;  
     font-family: ${theme.FONT_FAMILY.BOLD};    
     `};

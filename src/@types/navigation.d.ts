@@ -4,11 +4,16 @@ export declare global {
             home: undefined;
             stats: undefined;
             registerMeal: undefined;
-            consultMeal: undefined;
+            consultMeal: any;
             feedback: {
-                type: FeedbackType;
+                type: string;
+            };
+            statusType: 'STATUSRED' | 'STATUSGREEN';
+            mealType: {
+                id: string;
+                type: StatusType;
                 title: string;
-                description: string;
+                time: string;
             };
         }
     }

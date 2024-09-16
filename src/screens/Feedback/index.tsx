@@ -7,7 +7,7 @@ import { Image } from 'react-native';
 import Button from '@Components/Button';
 
 export type FeedbackTypeProps = {
-    type: 'GREEN' | 'RED',
+    type: 'STATUSGREEN' | 'STATUSRED',
 };
 
 export function Feedback() {
@@ -15,10 +15,10 @@ export function Feedback() {
     const route = useRoute();
     const { type } = route.params as FeedbackTypeProps;
 
-    const feedbackIcon = type === 'GREEN' ? require('@assets/images/goodFeedback.png') : require('@assets/images/badFeedback.png');
-    const feedbackTitle = type === 'GREEN' ? 'Continue assim!' : 'Que pena!';
-    const feedbackBoldDescription = type === 'GREEN' ? 'dentro da dieta' : 'saiu da dieta';
-    const feedbackDescription = type === 'GREEN' ? 'Você continua dentro da dieta. Muito bem!' : 'Você saiu da dieta dessa vez, mas continue se esforçando e não desista!';
+    const feedbackIcon = type === 'STATUSGREEN' ? require('@assets/images/goodFeedback.png') : require('@assets/images/badFeedback.png');
+    const feedbackTitle = type === 'STATUSGREEN' ? 'Continue assim!' : 'Que pena!';
+    const feedbackBoldDescription = type === 'STATUSGREEN' ? 'dentro da dieta' : 'saiu da dieta';
+    const feedbackDescription = type === 'STATUSGREEN' ? 'Você continua dentro da dieta. Muito bem!' : 'Você saiu da dieta dessa vez, mas continue se esforçando e não desista!';
 
     const parts = feedbackDescription.split(feedbackBoldDescription);
 

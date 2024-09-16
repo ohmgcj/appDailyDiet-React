@@ -1,10 +1,10 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled, { css } from 'styled-components/native';
 
-export type MealStatus = 'GREEN' | 'RED';
+//export type MealStatus = 'STATUSGREEN' | 'STATUSRED';
 
 type Tag = {
-    status: MealStatus
+    status: string;
 }
 
 export const Container = styled.View`
@@ -79,7 +79,7 @@ export const Status = styled.View<Tag>`
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background-color: ${({ theme, status }) => status === 'GREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK };
+    background-color: ${({ theme, status }) => status === 'STATUSGREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK };
 `;
 
 export const EditButtons = styled.View`

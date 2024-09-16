@@ -1,7 +1,6 @@
+import { StatusType } from '@screens/Home';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-
-export type StatusType = 'STATUSRED' | 'STATUSGREEN';
 
 type Props = {
     type: StatusType;

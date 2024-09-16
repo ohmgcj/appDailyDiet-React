@@ -23,11 +23,11 @@ export const Meals = styled.View`
     gap: 32px;
 `;
 
-export const New = styled.View`
+export const ViewNew = styled.View`
     gap: 8px;
 `;
 
-export const Date = styled.Text`
+export const DateView = styled.Text`
     color: ${({ theme }) => theme.COLORS.GRAY_1};
     font-size: ${({ theme }) => theme.FONT_SIZE.XL}px;
     font-weight: bold;

@@ -1,23 +1,105 @@
 import React, { useState } from 'react';
 import { Image, Text, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect} from '@react-navigation/native'
 
-import { Container, LogoContainer, Meals, New, DayList, Date } from './styles';
+import { Container, LogoContainer, Meals, ViewNew, DayList, DateView } from './styles';
 import { ForkKnife } from 'phosphor-react-native';
 
 import Percent from '@Components/Percent';
 import { ButtonIcon } from '@Components/ButtonIcon';
 import { Meal } from '@Components/Meal';
-import { ListEmpty } from '@Components/ListEmpty';
+
+import { dateMapper, DateMapperType } from './homeMappers'
+import { getAllMeals } from '@storage/meal/getAllMeals';
+
+export type StatusType = 'STATUSGREEN' | 'STATUSRED'
+
+export type MealType = {
+    id: string,
+    mealTitle: string,
+    mealDescription: string,
+    mealDate: string,
+    mealTime: string,
+    mealType: StatusType,
+}
+
 
 export function Home() {
-    const [registredMeals, setMeals] = useState([{id: 1, type: 'STATUSGREEN', time: '16:20', title:'TESTE'}, {id: 2, type: 'STATUSRED', time: '16:50', title:'outro'}]);
+    const [registredMealsMapped, setMealsMapped] = useState<DateMapperType[]>([]);
 
     const navigation = useNavigation();
+
+    function sortMealPerTime(a: MealType, b: MealType) {
+        const [hoursA, minutesA] = a.mealTime.split(':').map(Number);
+        const [hoursB, minutesB] = b.mealTime.split(':').map(Number);
+    
+        if (hoursA !== hoursB) {
+          return hoursA - hoursB;
+        }
+        return minutesA - minutesB;
+      }
+
+      function sortMealPerDate(a: DateMapperType, b: DateMapperType) {
+        const [dayA, monthA, yearA] = a.date.split('/').map(Number);
+        const [dayB, monthB, yearB] = b.date.split('/').map(Number);
+    
+        // Cria objetos Date para comparação
+        const dateA = new Date(yearA, monthA - 1, dayA); // Meses começam em 0
+        const dateB = new Date(yearB, monthB - 1, dayB);
+    
+        return dateA.getTime() - dateB.getTime(); // Retorna a diferença em milissegundos
+    }
+        
 
     function handleNewMeal() {
         navigation.navigate('registerMeal');
     }
+
+    async function fetchMeals() {
+        try {
+            const data: MealType[] = await getAllMeals();
+            setMealsMapped([])
+            setMealsMapped(dateMapper(data))
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    useFocusEffect(
+        React.useCallback(() => {
+          fetchMeals();
+        }, [])
+      );
+
+      function renderMeal({ item }: { item: MealType }) {
+        return(
+            <Meal 
+                title={item.mealTitle}
+                time={item.mealTime}
+                type={item.mealType}
+                onPress={() => navigation.navigate('consultMeal', {
+                    mealDate: item.mealDate, 
+                    mealTime: item.mealTime, 
+                    mealDescription: item.mealDescription, 
+                    mealTitle: item.mealTitle, 
+                    mealType: item.mealType
+                })}
+            />
+        )
+      }
+
+      function renderDateView({ item }: { item: DateMapperType }) {
+        return(
+            <DayList>
+                <DateView>{item.date}</DateView>
+                <FlatList 
+                    data={item.mealList.sort(sortMealPerTime).reverse()}
+                    renderItem={renderMeal}
+                    keyExtractor={(item) => item.id}
+                />
+            </DayList>
+        )
+      }
 
     return (
         <Container>
@@ -27,7 +109,7 @@ export function Home() {
             </LogoContainer>
             <Percent percentNumber={'50,30'}/>
             <Meals>
-                <New>
+                <ViewNew>
                     <Text>Refeições</Text>
                     <ButtonIcon 
                         icon={'ADD'} 
@@ -35,21 +117,13 @@ export function Home() {
                         title='Nova Refeição'
                         onPress={handleNewMeal}
                     />
-                </New>
-                <DayList>
-                    <Date>22.05.2024</Date>
-                    <FlatList
-                        data={registredMeals} 
-                        keyExtractor={(item) => item.id.toString()}
-                        renderItem={({ item }) => (
-                        <Meal type={item.type} time={item.time} title={item.title}/>
-                        )}
-                        contentContainerStyle={registredMeals.length === 0 && { flex: 1 }}
-                        ListEmptyComponent={() => (
-                            <ListEmpty/>
-                        )}
-                    />
-                </DayList>
+                </ViewNew>
+
+                <FlatList
+                    data={registredMealsMapped.sort(sortMealPerDate).reverse()}
+                    renderItem={renderDateView}
+                    keyExtractor={(item) => item.date}
+                />
             </Meals>
         </Container>
     );

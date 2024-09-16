@@ -3,10 +3,15 @@ import { Container, Content, Info, Meal, Title, Description, TimeInfo, Date, Tag
 import { Header } from '@Components/Header';
 import { ButtonIcon } from '@Components/ButtonIcon';
 
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native'; 
 import { Alert } from 'react-native';
 
+import { MealType } from '@screens/Home';
+import React from 'react';
+
 export function ConsultMeal() {
+    const route = useRoute();
+    const { mealDate, mealTime, mealDescription, mealTitle, mealType } = route.params as MealType;
 
     const navigation = useNavigation();
 
@@ -23,15 +28,15 @@ export function ConsultMeal() {
             <Content>
                 <Info>
                 <Meal>
-                    <Title>Pães</Title>
-                    <Description>Teste de texto</Description>
+                    <Title>{mealTitle}</Title>
+                    <Description>{mealDescription}</Description>
                 </Meal>
                 <TimeInfo>
                 <Date>Date e Hora</Date>
-                <Description>12/08/2024 às 16:00</Description>
+                <Description>{mealDate} às {mealTime}</Description>
                 </TimeInfo>
                 <TagContainer>
-                    <Status status='GREEN'/>
+                    <Status status={mealType}/>
                     <Description>dentro da dieta</Description>
                 </TagContainer>
                 </Info>

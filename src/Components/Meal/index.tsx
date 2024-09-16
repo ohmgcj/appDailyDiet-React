@@ -1,23 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import { Container, Time, Divider, Title, Status } from './styles';
 
-export type StatusType = 'STATUSRED' | 'STATUSGREEN';
+import { TouchableOpacityProps } from 'react-native';
 
-type Props = {
-    type: StatusType;
+export type Props = TouchableOpacityProps & {
     time: string;
     title: string;
+    type: string;
+    onPress: Function;
 }
 
-export function Meal({ type, time, title }: Props){
-    const navigation = useNavigation();
-
-    const handleViewMeal = () => {
-        navigation.navigate('consultMeal')
-    }
+export function Meal({ type, time, title, onPress }: Props){
     
     return (
-        <Container onPress={handleViewMeal}>
+        <Container onPress={onPress}>
             <Time>{time}</Time>
             <Divider/>
             <Title>{title}</Title>

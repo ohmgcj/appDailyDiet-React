@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Container, Content, Form, Label, NameInput, DescInput, DateAndTime, LeftWrapper, RightWrapper, DietButtons } from './styles';
 
 import { useNavigation } from '@react-navigation/native';
@@ -7,12 +7,14 @@ import ButtonDietStatus from '@Components/ButtonDietStatus';
 import Button from '@Components/Button';
 import { Header } from '@Components/Header';
 import { Alert, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { createMeal } from '@storage/meal/createMeal';
 
 export function RegisterMeal(){
     const [name, setName] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [date, setDate] = useState<string>('')
     const [time, setTime] = useState<string>('')
+    const [type, setType] = useState(() => (activeButton === 'Sim' ? 'STATUSGREEN' : 'STATUSRED'))
 
     const [isDateValid, setIsDateValid] = useState<boolean>(true);
     const [isTimeValid, setIsTimeValid] = useState<boolean>(true);
@@ -87,14 +89,24 @@ export function RegisterMeal(){
     };
 
     // Função para manipular o envio do formulário
-    const handleSubmit = () => {
-        if (isDateValid && isTimeValid && name && description && date && time) {
-        Alert.alert('Concluído', 'Sua refeição foi registrada');
-        navigation.navigate('feedback', { type: 'GREEN', title: 'Teste na home', description: 'description'})
-        } else {
-        Alert.alert('Erro', 'Por favor, preencha todos os campos corretamente.');
+    async function handleSubmit() {
+        try {
+            if (isDateValid && isTimeValid && name && description && date && time) {
+            await createMeal(name, description, date, time, type);
+            navigation.navigate('feedback', {type: type} )
+            } else {
+            Alert.alert('Erro', 'Por favor, preencha todos os campos corretamente.');
+            }
+
+        } catch(error) {
+            console.log(error)
         }
     };
+
+    useEffect(() => {
+        setType(activeButton === 'Sim' ? 'STATUSGREEN' : 'STATUSRED');
+      }, [activeButton]);
+
     return(
         <Container>
             <Header title='Nova refeição'/>
@@ -109,7 +121,8 @@ export function RegisterMeal(){
                     <DescInput
                         value={description}
                         onChangeText={setDescription}
-                        multiline/>
+                        multiline
+                        textAlignVertical='top'/>
                     <DateAndTime>
                         <LeftWrapper>
                         <Label>Data</Label>

@@ -30,7 +30,6 @@ export function AppRoutes() {
             <Screen
                 name="feedback"
                 component={Feedback}
-                initialParams={{ type: 'RED', title: 'Teste sem home', description: 'description'}}
             />
         </Navigator>
     );
