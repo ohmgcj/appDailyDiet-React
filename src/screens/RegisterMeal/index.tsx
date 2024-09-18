@@ -32,7 +32,7 @@ export function RegisterMeal(){
         setDate(formattedDate);
     };
 
-    // Função para formatar a data como DD/MM/YYYY
+    // Função para formatar a data como DD/MM/AAAA
     const formatDate = (text: string): string => {
         const cleaned = text.replace(/\D/g, ''); // Remove tudo que não for número
         
@@ -52,7 +52,7 @@ export function RegisterMeal(){
         return formattedText;
     };
 
-    // Função para validar o formato da data como DD/MM/YYYY com limite
+    // Função para validar o formato da data como DD/MM/AAAA com limite
     const validateDate = (text: string): boolean => {
         const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
         return datePattern.test(text);

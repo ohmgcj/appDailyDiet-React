@@ -9,7 +9,7 @@ export async function createMeal(mealTitle: string, mealDescription: string, mea
         const lastId = storedMeals.length > 0 ? Math.max(...storedMeals.map(meal => parseInt(meal.id))) : 0;
 
         const newMeal = {
-            id: (lastId + 1).toString(),  // ID como string
+            id: (lastId + 1).toString(),
             mealTitle,
             mealDescription,
             mealDate,

@@ -15,6 +15,7 @@ import { getAllMeals } from '@storage/meal/getAllMeals';
 export type StatusType = 'STATUSGREEN' | 'STATUSRED'
 
 export type MealType = {
+    [x: string]: any;
     id: string,
     mealTitle: string,
     mealDescription: string,
@@ -77,13 +78,7 @@ export function Home() {
                 title={item.mealTitle}
                 time={item.mealTime}
                 type={item.mealType}
-                onPress={() => navigation.navigate('consultMeal', {
-                    mealDate: item.mealDate, 
-                    mealTime: item.mealTime, 
-                    mealDescription: item.mealDescription, 
-                    mealTitle: item.mealTitle, 
-                    mealType: item.mealType
-                })}
+                onPress={() => navigation.navigate('consultMeal', {item})}
             />
         )
       }

@@ -12,7 +12,7 @@ type Props = TouchableOpacityProps &{
     onPress: () => void;
 }
 
-export function ButtonIcon({ type, title, icon, onPress, ...rest }: Props){
+export function ButtonIcon({ type, title, icon, onPress }: Props){
     const IconComponent = icon === 'ADD' ? Plus : icon === 'EDIT' ? PencilSimpleLine : Trash;
     const IconColor = type === 'DEFAULT' ? "white" : "black";
     return(
