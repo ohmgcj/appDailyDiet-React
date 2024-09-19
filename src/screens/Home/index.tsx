@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, FlatList } from 'react-native';
 import { useNavigation, useFocusEffect} from '@react-navigation/native'
 
@@ -27,6 +27,8 @@ export type MealType = {
 
 export function Home() {
     const [registredMealsMapped, setMealsMapped] = useState<DateMapperType[]>([]);
+    const [allMeals, setAllMeals] = useState<MealType[]>([]);
+    const [totalPercent, setTotalPercent] = useState<string>();
 
     const navigation = useNavigation();
 
@@ -50,7 +52,22 @@ export function Home() {
     
         return dateA.getTime() - dateB.getTime(); // Retorna a diferença em milissegundos
     }
-        
+
+    function findPercent() {
+        let totalgreen = 0;
+        let totalred = 0;
+        allMeals.map((item) => {
+            if (item.mealType === 'STATUSGREEN') {
+                totalgreen += 1
+            } else if (item.mealType === 'STATUSRED') {
+                totalred += 1
+            }
+        })
+        const mealsTotal = totalgreen + totalred
+        const result = ((totalgreen / mealsTotal) * 100).toFixed(2);
+        setTotalPercent(result)
+    }
+       
 
     function handleNewMeal() {
         navigation.navigate('registerMeal');
@@ -61,6 +78,8 @@ export function Home() {
             const data: MealType[] = await getAllMeals();
             setMealsMapped([])
             setMealsMapped(dateMapper(data))
+            setAllMeals([])
+            setAllMeals(data)
         } catch(error) {
             console.log(error)
         }
@@ -71,6 +90,12 @@ export function Home() {
           fetchMeals();
         }, [])
       );
+
+    useEffect(() => {
+        if (allMeals.length > 0) {
+            findPercent();
+        }
+    }, [allMeals]);
 
       function renderMeal({ item }: { item: MealType }) {
         return(
@@ -102,7 +127,7 @@ export function Home() {
                 <ForkKnife size={36} weight="bold" style={{ marginRight: 5 }}/>
                 <Image source={require('@assets/images/Vector.png')}/>
             </LogoContainer>
-            <Percent percentNumber={'50,30'}/>
+            <Percent percentNumber={totalPercent || '0'}/>
             <Meals>
                 <ViewNew>
                     <Text>Refeições</Text>
