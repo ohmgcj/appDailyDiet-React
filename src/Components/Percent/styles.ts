@@ -37,16 +37,16 @@ export const ArrowIconTouchable = styled(TouchableOpacity)`
   top: 50px;
 `;
 
-export const ArrowUpIcon = styled(ArrowUpRight).attrs(({ theme }) => ({
+export const ArrowUpIcon = styled(ArrowUpRight).attrs<BoxProps>(({ theme, colorType }) => ({
     size: theme.FONT_SIZE.XXL,
-    color: theme.COLORS.GREEN_DARK
+    color: colorType == 'GREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK
 }))`
     position: absolute;
     top: 10px;
     right: 10px;
 `;
 
-export const ArrowLeftIcon = styled(ArrowLeft).attrs(({ theme }) => ({
+export const ArrowLeftIcon = styled(ArrowLeft).attrs<BoxProps>(({ theme, colorType }) => ({
     size: 24,
-    color: theme.COLORS.GREEN_DARK
+    color: colorType == 'GREEN' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK
 }))``;

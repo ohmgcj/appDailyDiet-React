@@ -29,10 +29,10 @@ export default function Percent({ percentNumber, iconPosition, height  }: Props)
             </PercentDescription>
             {iconPosition === 'left' ? (
                 <ArrowIconTouchable onPress={handleGoBack}>
-                    <ArrowLeftIcon />
+                    <ArrowLeftIcon colorType={parseInt(percentNumber) > 50 ? 'GREEN' : 'RED'} />
                 </ArrowIconTouchable>
             ) : (
-                <ArrowUpIcon />
+                <ArrowUpIcon colorType={parseInt(percentNumber) > 50 ? 'GREEN' : 'RED'}/>
             )}  
         </Container>
     )
