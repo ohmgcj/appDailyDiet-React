@@ -4,7 +4,7 @@ import { ArrowLeft } from 'phosphor-react-native';
 import { TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export type HeaderTypeStyleProp = 'GREEN' | 'RED';
+export type HeaderTypeStyleProp = 'STATUSGREEN' | 'STATUSRED';
 
 type Props = {
     type?: HeaderTypeStyleProp;
@@ -13,7 +13,7 @@ type Props = {
 export const Container = styled(SafeAreaView)<Props>`
     height: 132px;
 
-    background-color: ${({ theme, type }) => type === 'GREEN' ? theme.COLORS.GREEN_MID : type === 'RED' ? theme.COLORS.RED_LIGHT : theme.COLORS.GRAY_5};
+    background-color: ${({ theme, type }) => type === 'STATUSGREEN' ? theme.COLORS.GREEN_LIGHT : type === 'STATUSRED' ? theme.COLORS.RED_LIGHT : theme.COLORS.GRAY_5};
 
     justify-content: center;
 `;

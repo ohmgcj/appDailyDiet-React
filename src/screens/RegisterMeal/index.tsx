@@ -1,15 +1,21 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Content, Form, Label, NameInput, DescInput, DateAndTime, LeftWrapper, RightWrapper, DietButtons } from './styles';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import ButtonDietStatus from '@Components/ButtonDietStatus';
 import Button from '@Components/Button';
 import { Header } from '@Components/Header';
 import { Alert, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { createMeal } from '@storage/meal/createMeal';
+import { MealType } from '@screens/Home';
+import { editMeal } from '@storage/meal/editMeal';
 
 export function RegisterMeal(){
+    const route = useRoute();
+    const mealToEdit = route.params as MealType;
+    const isEditing = !!mealToEdit; // Verifica se está editando
+
     const [name, setName] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [date, setDate] = useState<string>('')
@@ -23,8 +29,21 @@ export function RegisterMeal(){
 
     const navigation = useNavigation();
 
-    // Segue a baixo muitas linhas de comentários, é minha primeira vez trabalhando com formatação automática de data e hora
+    function handleSetForm(){
+        setName(mealToEdit.meal.mealTitle)
+        setDescription(mealToEdit.meal.mealDescription)
+        setDate(mealToEdit.meal.mealDate)
+        setTime(mealToEdit.meal.mealTime)
+        setActiveButton(mealToEdit.meal.mealType === 'STATUSGREEN' ? 'Sim' : 'Não')
+    }
 
+    useEffect(() => {
+        if (isEditing) {
+            handleSetForm();
+        }
+      }, [mealToEdit, isEditing]);
+
+    // Segue a baixo muitas linhas de comentários, é minha primeira vez trabalhando com formatação automática de data e hora
     // Função para manipular mudanças no campo de data
     const handleDateChange = (text: string) => {
         const formattedDate = formatDate(text);
@@ -103,13 +122,27 @@ export function RegisterMeal(){
         }
     };
 
+    async function handleSumbitEdit() {
+        try {
+            if (isDateValid && isTimeValid && name && description && date && time) {
+            await editMeal(mealToEdit.meal.id ,name, description, date, time, type);
+            navigation.navigate('feedback', {type: type} )
+            } else {
+            Alert.alert('Erro', 'Por favor, preencha todos os campos corretamente.');
+            }
+
+        } catch(error) {
+            console.log(error)
+        }
+    };
+
     useEffect(() => {
         setType(activeButton === 'Sim' ? 'STATUSGREEN' : 'STATUSRED');
       }, [activeButton]);
 
     return(
         <Container>
-            <Header title='Nova refeição'/>
+            <Header title={isEditing ? 'Editar' : 'Nova refeição'}/>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <Content>
                 <Form>
@@ -159,7 +192,7 @@ export function RegisterMeal(){
                         />
                     </DietButtons>
                 </Form>
-                <Button title='Nova Refeição' onPress={handleSubmit}/>
+                <Button title={isEditing ? 'Editar Refeição' : 'Nova Refeição'} onPress={isEditing ? handleSumbitEdit : handleSubmit}/>
             </Content>
             </TouchableWithoutFeedback>
         </Container>

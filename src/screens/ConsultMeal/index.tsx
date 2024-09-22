@@ -17,8 +17,8 @@ export function ConsultMeal() {
 
     const navigation = useNavigation();
 
-    const handleEditMeal = () => {
-        navigation.navigate('registerMeal');
+    function handleEditMeal(meal: MealType) {
+        navigation.navigate('registerMeal', { meal });
     }
 
     async function handleDelete(id: string) {
@@ -34,7 +34,7 @@ export function ConsultMeal() {
 
     return(
         <Container>
-            <Header title='Refeição'/>
+            <Header title='Refeição' type={itemMeal.mealType}/>
             <Content>
                 <Info>
                 <Meal>
@@ -47,12 +47,12 @@ export function ConsultMeal() {
                 </TimeInfo>
                 <TagContainer>
                     <Status status={itemMeal.mealType}/>
-                    <Description>dentro da dieta</Description>
+                    <Description>{itemMeal.mealType === 'STATUSGREEN' ? 'dentro da dieta' : 'fora da dieta'}</Description>
                 </TagContainer>
                 </Info>
                 <EditButtons>
-                    <ButtonIcon icon='EDIT' title='Editar Refeição' type='DEFAULT' onPress={() => handleEditMeal}/>
-                    <ButtonIcon icon='DELETE' title='Excluir Refeição' type='ACTIVE' onPress={() => handleDelete(itemMeal.id)}/>
+                    <ButtonIcon icon='EDIT' title='Editar Refeição' type='DEFAULT' onPress={() => handleEditMeal(itemMeal)}/>
+                    <ButtonIcon icon='DELETE' title='Excluir Refeição' type='ACTIVE' onPress={() => handleDelete(itemMeal)}/>
                 </EditButtons>
             </Content>
         </Container>

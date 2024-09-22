@@ -20,7 +20,7 @@ export default function Percent({ percentNumber, iconPosition, height  }: Props)
     };
     
     return(
-        <Container height={height} onTouchStart={handleOpenStats}>
+        <Container height={height} onTouchStart={handleOpenStats} colorType = {parseInt(percentNumber) > 50 ? 'GREEN' : 'RED'}>
             <PercentNumber>
                 {percentNumber}%
             </PercentNumber>     

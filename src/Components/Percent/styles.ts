@@ -5,10 +5,11 @@ import { TouchableOpacity } from 'react-native';
 type BoxProps = {
     width?: number;
     height?: number;
+    colorType: string;
 }
 
 export const Container = styled.View<BoxProps>`
-    background-color: ${({ theme }) => theme.COLORS.GREEN_LIGHT};
+    background-color: ${({ theme, colorType }) => colorType == 'GREEN' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
     border-radius: 8px;
 
     justify-content: center;
