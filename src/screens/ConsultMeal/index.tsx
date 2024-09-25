@@ -7,13 +7,16 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Alert } from 'react-native';
 
 import { MealType } from '@screens/Home';
-import React from 'react';
+import React, { useState } from 'react';
 import { deleteMeal } from '@storage/meal/deleteMeal';
+import { DeleteModal } from '@Components/DeleteModal';
 
 export function ConsultMeal() {
     const route = useRoute();
     const item = route.params as MealType;
     const itemMeal = item.item;
+
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
     const navigation = useNavigation();
 
@@ -33,6 +36,7 @@ export function ConsultMeal() {
     }
 
     return(
+        <>
         <Container>
             <Header title='Refeição' type={itemMeal.mealType}/>
             <Content>
@@ -52,9 +56,14 @@ export function ConsultMeal() {
                 </Info>
                 <EditButtons>
                     <ButtonIcon icon='EDIT' title='Editar Refeição' type='DEFAULT' onPress={() => handleEditMeal(itemMeal)}/>
-                    <ButtonIcon icon='DELETE' title='Excluir Refeição' type='ACTIVE' onPress={() => handleDelete(itemMeal)}/>
+                    <ButtonIcon icon='DELETE' title='Excluir Refeição' type='ACTIVE' onPress={() => setIsDeleteModalVisible(true)}/>
                 </EditButtons>
             </Content>
         </Container>
+        <DeleteModal 
+        isVisible={isDeleteModalVisible}
+        onCancel={() => setIsDeleteModalVisible(false)}
+        onDelete={() => handleDelete(itemMeal.id)}/>
+        </>
     );
 };
