@@ -20,3 +20,5 @@ O **DietApp** é uma aplicação mobile desenvolvida em **React Native** que per
 - [Styled Components](https://styled-components.com/)
 - [React Navigation](https://reactnavigation.org/)
 - [AsyncStorage](https://react-native-async-storage.github.io/async-storage/)
+
+Desenvolvido por [Caio Alves](https://github.com/ohmgcj). Entre em contato para mais informações!
